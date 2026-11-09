@@ -1,67 +1,1301 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <title>Document</title>
-  <style>
-    body{
-      margin: 10px;
-      padding:5px;
-      background-color: orange;
-    }
-    h1{
-      font-size: 1.8rem;
-      color: green;
-    }
-    #container{
-  background-color: antiquewhite;
-      padding: 10px;
-      height: auto;
-      width: 400px;
-    }
-    #abouthead{
-      color: white;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TypeMaster - Typing Speed Enhancer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+ --bg:#101a29;
+ --panel:#1c2a3c;
+ --card:#26374d;
+ --border:#344a64;
+ --blue:#25baf5;
+ --text:#f5f7fb;
+ --muted:#9bacc2;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+
+body{
+ background:var(--bg);
+ color:var(--text);
+ font-family:Roboto,Arial,sans-serif;
+}
+
+a{text-decoration:none;color:inherit}
+
+.container{
+ width:94%;
+ max-width:1250px;
+ margin:auto;
+}
+
+/* NAVBAR */
+
+nav{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ padding:22px 0;
+ border-bottom:1px solid #ffffff12;
+}
+
+.logo{
+ font-size:27px;
+ font-weight:800;
+ color:var(--blue);
+}
+
+.navlinks{
+ display:flex;
+ gap:28px;
+}
+
+.navlinks a{
+ color:var(--muted);
+ font-size:14px;
+}
+
+.navlinks a:hover{color:var(--blue)}
+
+.nav-btn{
+ background:var(--blue);
+ color:#092338;
+ padding:11px 19px;
+ border-radius:8px;
+ font-weight:700;
+}
+
+.menu{
+ display:none;
+ background:none;
+ color:white;
+ border:0;
+ font-size:25px;
+ cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+ display:grid;
+ grid-template-columns:1.1fr .9fr;
+ align-items:center;
+ gap:35px;
+ padding:85px 0;
+}
+
+.tag{
+ display:inline-block;
+ padding:9px 15px;
+ background:#123e58;
+ color:var(--blue);
+ border-radius:30px;
+ font-size:12px;
+ margin-bottom:23px;
+}
+
+.hero h1{
+ font-size:clamp(42px,6vw,68px);
+ line-height:1.12;
+}
+
+.hero h1 span{color:var(--blue)}
+
+.hero p{
+ color:var(--muted);
+ line-height:1.9;
+ margin:22px 0;
+ max-width:520px;
+}
+
+.btn{
+ display:inline-block;
+ background:var(--blue);
+ color:#092338;
+ padding:14px 23px;
+ border:0;
+ border-radius:8px;
+ font-weight:700;
+ cursor:pointer;
+}
+
+.btn:hover{filter:brightness(1.1)}
+
+.outline{
+ display:inline-block;
+ border:1px solid var(--border);
+ padding:13px 22px;
+ border-radius:8px;
+ margin-left:10px;
+}
+
+.hero-card{
+ background:var(--panel);
+ border:1px solid var(--border);
+ border-radius:18px;
+ padding:28px;
+ box-shadow:0 20px 60px #0004;
+}
+
+.hero-card h2{
+ color:var(--blue);
+ font-size:30px;
+ margin:20px 0 10px;
+}
+
+.hero-card p{
+ color:var(--muted);
+ font-size:14px;
+ line-height:1.8;
+}
+
+.hero-icon{
+ font-size:60px;
+ text-align:center;
+}
+
+/* GENERAL SECTIONS */
+
+section{padding:75px 0}
+
+.heading{
+ text-align:center;
+ margin-bottom:40px;
+}
+
+.heading h2{
+ font-size:34px;
+ margin-bottom:12px;
+}
+
+.heading p{
+ color:var(--muted);
+ line-height:1.8;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:20px;
+}
+
+.card{
+ background:var(--panel);
+ border:1px solid var(--border);
+ padding:27px;
+ border-radius:13px;
+ transition:.3s;
+}
+
+.card:hover{
+ transform:translateY(-5px);
+ border-color:var(--blue);
+}
+
+.card-icon{
+ font-size:35px;
+ margin-bottom:17px;
+}
+
+.card h3{margin-bottom:12px}
+
+.card p{
+ color:var(--muted);
+ line-height:1.8;
+ font-size:14px;
+}
+
+/* PRACTICE AREA */
+
+.practice-box{
+ background:var(--panel);
+ border:1px solid var(--border);
+ border-radius:18px;
+ padding:30px;
+}
+
+.practice-title{
+ text-align:center;
+ margin-bottom:30px;
+}
+
+.practice-title h2{
+ color:var(--blue);
+ font-size:38px;
+ margin-bottom:10px;
+}
+
+.practice-title p{color:var(--muted)}
+
+.subheading{
+ font-size:19px;
+ margin:25px 0 18px;
+}
+
+.modes{
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+ gap:12px;
+}
+
+.mode{
+ background:var(--card);
+ border:2px solid var(--border);
+ border-radius:14px;
+ padding:17px 8px;
+ text-align:center;
+ cursor:pointer;
+ transition:.2s;
+}
+
+.mode:hover,.mode.active{
+ border-color:var(--blue);
+ background:#075b80;
+}
+
+.mode strong{
+ display:block;
+ font-size:26px;
+ color:var(--blue);
+ margin-bottom:8px;
+}
+
+.mode small{font-size:13px}
+
+.settings{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:16px;
+}
+
+.settings label{
+ color:var(--muted);
+ font-size:14px;
+}
+
+select{
+ display:block;
+ width:100%;
+ margin-top:10px;
+ background:var(--card);
+ color:white;
+ padding:15px;
+ border:1px solid var(--border);
+ border-radius:9px;
+ outline:none;
+ font-size:14px;
+}
+
+.performance{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:13px;
+}
+
+.metric{
+ background:var(--card);
+ padding:22px 10px;
+ border-radius:13px;
+ text-align:center;
+}
+
+.metric h2{
+ color:var(--blue);
+ font-size:33px;
+ margin-bottom:8px;
+}
+
+.metric p{
+ color:var(--muted);
+ font-size:14px;
+}
+
+.target{
+ background:#101d2e;
+ border:2px solid var(--border);
+ padding:25px;
+ border-radius:13px;
+ font-size:22px;
+ line-height:2;
+ letter-spacing:1px;
+ overflow-wrap:anywhere;
+ min-height:140px;
+ color:#8ea2be;
+ margin-bottom:18px;
+}
+
+.target .correct{color:#36d995}
+.target .wrong{
+ color:#ff6262;
+ background:#ff626233;
+ border-radius:3px;
+}
+.target .current{
+ border-left:2px solid var(--blue);
+}
+
+textarea{
+ width:100%;
+ height:130px;
+ resize:vertical;
+ background:var(--card);
+ border:2px solid var(--blue);
+ border-radius:13px;
+ padding:20px;
+ color:white;
+ font-size:17px;
+ outline:none;
+ line-height:1.6;
+}
+
+textarea:disabled{opacity:.6}
+
+textarea::placeholder{color:#8190a5}
+
+.practice-actions{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:13px;
+ margin-top:18px;
+}
+
+.practice-actions button{
+ width:100%;
+ font-size:15px;
+}
+
+.message{
+ text-align:center;
+ color:var(--blue);
+ margin-top:18px;
+ min-height:20px;
+}
+
+/* ABOUT */
+
+.about{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:40px;
+ align-items:center;
+}
+
+.about-visual{
+ background:linear-gradient(140deg,#174567,#15334a);
+ border:1px solid var(--border);
+ border-radius:18px;
+ padding:60px 20px;
+ text-align:center;
+}
+
+.about-visual div{font-size:100px}
+
+.about-visual h3{
+ font-size:25px;
+ color:var(--blue);
+ margin-top:15px;
+}
+
+.about-content h2{
+ font-size:35px;
+ margin-bottom:20px;
+}
+
+.about-content p{
+ color:var(--muted);
+ line-height:2;
+ margin-bottom:18px;
+}
+
+/* LEVELS */
+
+.level{
+ text-align:center;
+}
+
+.level .card-icon{font-size:40px}
+
+/* DEVELOPER */
+
+.developer{
+ background:var(--panel);
+ border:1px solid var(--border);
+ border-radius:18px;
+ overflow:hidden;
+}
+
+.dev-title{
+ background:var(--card);
+ padding:25px;
+ text-align:center;
+ border-bottom:1px solid var(--border);
+}
+
+.dev-title h2{
+ font-size:35px;
+ font-style:italic;
+}
+
+.dev-body{
+ padding:40px;
+ text-align:center;
+}
+
+.dev-avatar{
+ height:105px;
+ width:105px;
+ display:grid;
+ place-items:center;
+ border-radius:50%;
+ background:linear-gradient(140deg,#0e8dc2,#34c8ff);
+ color:white;
+ font-size:38px;
+ font-weight:800;
+ margin:0 auto 20px;
+ border:4px solid #ffffff25;
+}
+
+.dev-body h2{
+ font-size:30px;
+ color:var(--blue);
+ margin-bottom:25px;
+}
+
+.dev-label{
+ font-size:18px;
+ color:var(--muted);
+ margin-top:23px;
+ margin-bottom:10px;
+}
+
+.dev-info{
+ font-size:19px;
+ line-height:1.8;
+ overflow-wrap:anywhere;
+}
+
+.dev-info a:hover{color:var(--blue)}
+
+.dev-about{
+ font-size:21px;
+ font-weight:600;
+}
+
+/* CTA */
+
+.cta{
+ background:linear-gradient(120deg,#123d5b,#172a45);
+ border:1px solid var(--border);
+ padding:55px 20px;
+ border-radius:18px;
+ text-align:center;
+}
+
+.cta h2{
+ font-size:35px;
+ margin-bottom:15px;
+}
+
+.cta p{
+ color:var(--muted);
+ margin-bottom:25px;
+}
+
+/* FOOTER */
+
+footer{
+ border-top:1px solid var(--border);
+ padding:30px 0;
+ text-align:center;
+ color:var(--muted);
+ line-height:2;
+ font-size:13px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:850px){
+ .hero,.about{grid-template-columns:1fr}
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .modes{grid-template-columns:repeat(3,1fr)}
+ .navlinks{
+ display:none;
+ position:absolute;
+ top:75px;
+ left:0;
+ width:100%;
+ background:var(--panel);
+ padding:25px;
+ flex-direction:column;
+ z-index:10;
+ }
+ .navlinks.show{display:flex}
+ .menu{display:block}
+}
+
+@media(max-width:550px){
+ .grid{grid-template-columns:1fr}
+ .modes{grid-template-columns:repeat(2,1fr)}
+ .performance{grid-template-columns:repeat(2,1fr)}
+ .settings{grid-template-columns:1fr}
+ .practice-box{padding:17px}
+ .target{font-size:18px;padding:15px}
+ .hero h1{font-size:43px}
+ .practice-actions{grid-template-columns:1fr}
+ .dev-body{padding:25px 15px}
+ .dev-title h2{font-size:29px}
+ .heading h2{font-size:29px}
+ .cta h2{font-size:28px}
+}
+</style>
 </head>
+
 <body>
-  <h1><i><center> Test your Typing Skill </center></i></h1>
-  
-  <center>
-  <div id="container">
-<h2><i><center>Read this docs first......</center></i></h2>
 
-<hr>
-<p style="color: orange;text-align: justify;">Type the "<b>The TV show about foxy women quickly spending money on Louis Vuitton has yet to jump over the lazy shark.</b>" in given text box before 25 second time limit. You have time limit for 
-only 25 second to complete your typing. If you can't done in given time limit you have failed in typing text.
-You should keep this in mind that type your word in text box as it is given above the text box. You must avoid some mistakes like 
-letter should be case sensitive or grammetical symbol or spell correct. </p>
-<a href="main.html"><button type="button" class="btn btn-warning">Get Started!</button></a>
-</div>  
-</center>
+<div class="container">
 
+<!-- NAVIGATION -->
+
+<nav>
+ <a href="#home" class="logo">⌨ TypeMaster</a>
+
+ <div class="navlinks" id="navlinks">
+  <a href="#home">Home</a>
+  <a href="#practice">Practice</a>
+  <a href="#features">Features</a>
+  <a href="#about">About App</a>
+  <a href="#developer">Developer</a>
+ </div>
+
+ <a href="#practice" class="nav-btn">Start Test ↗</a>
+ <button class="menu" onclick="toggleMenu()">☰</button>
+</nav>
+
+<!-- HERO -->
+
+<header class="hero" id="home">
+
+ <div>
+  <div class="tag">✦ IMPROVE YOUR TYPING SKILLS</div>
+
+  <h1>
+   Master Your<br>
+   <span>Keyboard.</span>
+   <br>Improve Your Speed!
+  </h1>
+
+  <p>
+   Welcome to TypeMaster! Practice typing, increase
+   your speed, improve accuracy and become a
+   confident keyboard user.
+  </p>
+
+  <a href="#practice" class="btn">Start Practicing →</a>
+  <a href="#about" class="outline">Explore More</a>
+ </div>
+
+ <div class="hero-card">
+  <div class="hero-icon">⌨️</div>
+  <h2>Type. Improve. Repeat.</h2>
+  <p>
+   A simple and interactive platform for students,
+   beginners and professionals to enhance their
+   typing skills.
+  </p>
   <br>
-<center>
-  <div id="container">
-<h2><i><center>About Developer......</center></i></h2>
+  <a href="#practice" class="btn">Try TypeMaster →</a>
+ </div>
 
-<hr>
-<p style="color: orange;text-align: justify;">
-<h4 style="color:white;text-align: left;">RAJNISH KUMAR</h4>
-<span id="abouthead">Contact me on</span>
-<p>PHONE NO: 9570986396</p>
-<p>WHATSAPP NO: 90654 07531</p>
-<p>E-MAIL: rockstarrajnish4658@gmail.com</p>
-<span id="abouthead">Follow me on</span>
-<p>INSTAGRAM: webdevloper2</p>
-<span id="abouthead">About app</span>
-<p>TEST YOUR TYPING SKILLs</p>
-<p></p>
-</div>  
-</center>
+</header>
+
+<!-- FEATURES -->
+
+<section id="features">
+
+ <div class="heading">
+  <h2>Why Choose TypeMaster?</h2>
+  <p>Everything you need to become a better typist.</p>
+ </div>
+
+ <div class="grid">
+
+  <div class="card">
+   <div class="card-icon">⚡</div>
+   <h3>Speed Test</h3>
+   <p>Measure your typing speed in words per minute.</p>
+  </div>
+
+  <div class="card">
+   <div class="card-icon">🎯</div>
+   <h3>Accuracy Tracking</h3>
+   <p>Understand your mistakes and improve accuracy.</p>
+  </div>
+
+  <div class="card">
+   <div class="card-icon">📊</div>
+   <h3>Live Performance</h3>
+   <p>See your WPM, accuracy, mistakes and remaining time.</p>
+  </div>
+
+  <div class="card">
+   <div class="card-icon">⌨️</div>
+   <h3>10 Practice Modes</h3>
+   <p>Letters, numbers, symbols, words, paragraphs and more.</p>
+  </div>
+
+  <div class="card">
+   <div class="card-icon">🚀</div>
+   <h3>Multiple Difficulties</h3>
+   <p>Choose easy, medium or hard practice.</p>
+  </div>
+
+  <div class="card">
+   <div class="card-icon">🏆</div>
+   <h3>Skill Development</h3>
+   <p>Practice regularly and build confidence with your keyboard.</p>
+  </div>
+
+ </div>
+</section>
+
+<!-- TYPING PRACTICE -->
+
+<section id="practice">
+
+ <div class="practice-box">
+
+  <div class="practice-title">
+   <h2>⌨ TypeMaster</h2>
+   <p>Master your keyboard. Improve your typing speed!</p>
+  </div>
+
+  <h3 class="subheading">Choose Typing Mode</h3>
+
+  <div class="modes" id="modes">
+
+   <div class="mode active" data-mode="letters">
+    <strong>ABC</strong><small>Letters</small>
+   </div>
+
+   <div class="mode" data-mode="numbers">
+    <strong>123</strong><small>Numbers</small>
+   </div>
+
+   <div class="mode" data-mode="symbols">
+    <strong>@#$</strong><small>Symbols</small>
+   </div>
+
+   <div class="mode" data-mode="mixed">
+    <strong>Aa1!</strong><small>Mixed</small>
+   </div>
+
+   <div class="mode" data-mode="words">
+    <strong>abc</strong><small>Words</small>
+   </div>
+
+   <div class="mode" data-mode="sentences">
+    <strong>Aa Bb</strong><small>Sentences</small>
+   </div>
+
+   <div class="mode" data-mode="paragraphs">
+    <strong>Aa...</strong><small>Paragraphs</small>
+   </div>
+
+   <div class="mode" data-mode="punctuation">
+    <strong>,.;:</strong><small>Punctuation</small>
+   </div>
+
+   <div class="mode" data-mode="capital">
+    <strong>ABC</strong><small>Capital Letters</small>
+   </div>
+
+   <div class="mode" data-mode="keyboard">
+    <strong>⌨</strong><small>Keyboard Keys</small>
+   </div>
+
+  </div>
+
+  <h3 class="subheading">Test Settings</h3>
+
+  <div class="settings">
+
+   <label>
+    Difficulty Level
+    <select id="difficulty">
+     <option value="easy">Easy</option>
+     <option value="medium" selected>Medium</option>
+     <option value="hard">Hard</option>
+    </select>
+   </label>
+
+   <label>
+    Test Duration
+    <select id="duration">
+     <option value="30">30 Seconds</option>
+     <option value="60" selected>60 Seconds</option>
+     <option value="120">120 Seconds</option>
+     <option value="180">180 Seconds</option>
+    </select>
+   </label>
+
+  </div>
+
+  <h3 class="subheading">Your Performance</h3>
+
+  <div class="performance">
+
+   <div class="metric">
+    <h2 id="wpm">0</h2>
+    <p>WPM</p>
+   </div>
+
+   <div class="metric">
+    <h2 id="accuracy">100%</h2>
+    <p>Accuracy</p>
+   </div>
+
+   <div class="metric">
+    <h2 id="time">60</h2>
+    <p>Time Left</p>
+   </div>
+
+   <div class="metric">
+    <h2 id="mistakes">0</h2>
+    <p>Mistakes</p>
+   </div>
+
+  </div>
+
+  <h3 class="subheading">Type the text below</h3>
+
+  <div class="target" id="target"></div>
+
+  <textarea id="typingInput"
+   placeholder="Click here and start typing..."
+   spellcheck="false"
+   autocomplete="off"
+   autocorrect="off"
+   autocapitalize="off"></textarea>
+
+  <div class="practice-actions">
+
+   <button class="btn" id="restart">↻ Restart Test</button>
+
+   <button class="btn" id="next">Next Practice →</button>
+
+  </div>
+
+  <div class="message" id="message">
+   Select a mode and start typing!
+  </div>
+
+ </div>
+</section>
+
+<!-- ABOUT APP -->
+
+<section id="about">
+
+ <div class="heading">
+  <h2>About TypeMaster</h2>
+  <p>Know more about our typing practice application.</p>
+ </div>
+
+ <div class="about">
+
+  <div class="about-visual">
+   <div>⌨️</div>
+   <h3>Learn • Practice • Improve</h3>
+   <p style="color:#b2c5d8;margin-top:15px">
+    Every keystroke makes you better.
+   </p>
+  </div>
+
+  <div class="about-content">
+   <h2>Test Your Typing Skills</h2>
+
+   <p>
+    TypeMaster is a typing skill enhancement
+    application designed to help users test and
+    improve their keyboard typing speed.
+   </p>
+
+   <p>
+    It provides multiple typing modes, difficulty
+    levels, time-based tests and real-time performance
+    calculations.
+   </p>
+
+   <p>
+    Whether you are a student, job seeker or
+    professional, TypeMaster helps you practice
+    typing in a simple and engaging way.
+   </p>
+
+   <a href="#practice" class="btn">Practice Now →</a>
+  </div>
+
+ </div>
+</section>
+
+<!-- LEARNING LEVELS -->
+
+<section>
+
+ <div class="heading">
+  <h2>Improve Step by Step</h2>
+  <p>Choose your level and challenge yourself.</p>
+ </div>
+
+ <div class="grid">
+
+  <div class="card level">
+   <div class="card-icon">🌱</div>
+   <h3>Beginner</h3>
+   <p>Start with letters, simple words and keyboard basics.</p>
+  </div>
+
+  <div class="card level">
+   <div class="card-icon">🔥</div>
+   <h3>Intermediate</h3>
+   <p>Practice sentences and improve your typing speed.</p>
+  </div>
+
+  <div class="card level">
+   <div class="card-icon">🏆</div>
+   <h3>Advanced</h3>
+   <p>Challenge yourself with difficult paragraphs and symbols.</p>
+  </div>
+
+ </div>
+</section>
+
+<!-- DEVELOPER INFORMATION -->
+
+<section id="developer">
+
+ <div class="heading">
+  <h2>About Developer</h2>
+  <p>Meet the person behind TypeMaster.</p>
+ </div>
+
+ <div class="developer">
+
+  <div class="dev-title">
+   <h2>About Developer......</h2>
+  </div>
+
+  <div class="dev-body">
+
+   <div class="dev-avatar">RK</div>
+
+   <h2>RAJNISH KUMAR</h2>
+
+   <div class="dev-label">Contact me on</div>
+
+   <div class="dev-info">
+    PHONE NO:
+    <a href="tel:9570986396">9570986396</a>
+   </div>
+
+   <div class="dev-info" style="margin-top:20px">
+    WHATSAPP NO:
+    <a href="https://wa.me/919065407531" target="_blank">
+     90654 07531
+    </a>
+   </div>
+
+   <div class="dev-info" style="margin-top:20px">
+    E-MAIL:
+    <a href="mailto:rockstarrajnish4658@gmail.com">
+     rockstarrajnish4658@gmail.com
+    </a>
+   </div>
+
+   <div class="dev-label">Follow me on</div>
+
+   <div class="dev-info">
+    INSTAGRAM:
+    <a href="https://www.instagram.com/webdevloper2/"
+       target="_blank">webdevloper2 ↗</a>
+   </div>
+
+   <div class="dev-label">About app</div>
+
+   <div class="dev-info dev-about">
+    TEST YOUR TYPING SKILLS
+   </div>
+
+  </div>
+ </div>
+</section>
+
+<!-- CTA -->
+
+<section>
+
+ <div class="cta">
+  <h2>Ready to Become a Typing Master?</h2>
+  <p>Practice every day. Improve every day.</p>
+  <a href="#practice" class="btn">Start Your Test Now →</a>
+ </div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+ <h2 class="logo">⌨ TypeMaster</h2>
+ <p>Master your keyboard. Improve your typing speed!</p>
+ <p>© 2026 TypeMaster | All Rights Reserved.</p>
+ <p>Designed & Developed by Rajnish Kumar</p>
+</footer>
+
+</div>
+
+<script>
+
+/* MOBILE NAVIGATION */
+
+function toggleMenu(){
+ document.getElementById("navlinks").classList.toggle("show");
+}
+
+document.querySelectorAll(".navlinks a").forEach(a=>{
+ a.addEventListener("click",()=>{
+  document.getElementById("navlinks").classList.remove("show");
+ });
+});
+
+
+/* TYPING TEST ENGINE */
+
+const target = document.getElementById("target");
+const input = document.getElementById("typingInput");
+const duration = document.getElementById("duration");
+const difficulty = document.getElementById("difficulty");
+
+const wpmEl = document.getElementById("wpm");
+const accuracyEl = document.getElementById("accuracy");
+const timeEl = document.getElementById("time");
+const mistakesEl = document.getElementById("mistakes");
+const message = document.getElementById("message");
+
+let mode = "letters";
+let passage = "";
+let started = false;
+let finished = false;
+let remaining = 60;
+let timer = null;
+let startTime = 0;
+
+const data = {
+
+ letters:"abcdefghijklmnopqrstuvwxyz",
+
+ numbers:"1234567890 4567891230 1234567890",
+
+ symbols:"! @ # $ % ^ & * ( ) - _ + = ? / : ;",
+
+ mixed:"TypeMaster 2026! Learn typing skills. Practice every day.",
+
+ words:"apple garden keyboard computer practice learning speed accuracy beautiful success nature keyboard typing",
+
+ sentences:"The quick brown fox jumps over the lazy dog. Practice daily and improve your typing speed.",
+
+ paragraphs:"Typing is an important computer skill. Regular practice helps you improve your speed and accuracy. Stay focused and keep learning every day.",
+
+ punctuation:"Hello! How are you? I am learning typing. Practice daily, improve accuracy; and become faster.",
+
+ capital:"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG. PRACTICE MAKES YOU BETTER EVERY DAY.",
+
+ keyboard:"QWERTY U I O P ASDF G H J K L ZXCV B N M"
+};
+
+const wordBank = [
+"apple","garden","keyboard","computer","practice",
+"learning","speed","accuracy","beautiful","success",
+"nature","typing","student","knowledge","development",
+"creative","technology","education","future","professional"
+];
+
+const easyText =
+"The sun rises in the east. Birds sing beautiful songs. Practice every day and learn something new.";
+
+const mediumText =
+"Typing is an essential computer skill. Consistent practice helps you improve speed, accuracy and confidence.";
+
+const hardText =
+"Technology continues to transform our world; therefore, mastering digital skills requires patience, precision and consistent effort!";
+
+
+function generatePassage(){
+
+ const level = difficulty.value;
+ let text = data[mode];
+
+ if(mode === "letters"){
+  text = level === "easy" ?
+  "abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz" :
+  level === "medium" ?
+  "the quick brown fox jumps over the lazy dog " :
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz ";
+ }
+
+ if(mode === "numbers"){
+  text = "1234567890 9876543210 1234567890 4567891230 ";
+ }
+
+ if(mode === "symbols"){
+  text = "! @ # $ % ^ & * ( ) _ + = { } [ ] ; : ? / ";
+ }
+
+ if(mode === "mixed"){
+  text = "TypeMaster 2026! Practice 123 times & improve your skills. ";
+ }
+
+ if(mode === "words"){
+  text = level === "easy" ?
+  "cat dog sun tree book pen cup red blue green " :
+  wordBank.join(" ")+" ";
+ }
+
+ if(mode === "sentences"){
+  text = level === "easy" ? easyText :
+  level === "medium" ? mediumText : hardText;
+ }
+
+ if(mode === "paragraphs"){
+  text = level === "easy" ? easyText :
+  level === "medium" ? mediumText+" "+easyText :
+  hardText+" "+mediumText;
+ }
+
+ if(mode === "punctuation"){
+  text = "Hello! How are you? I am learning typing. Practice daily, improve accuracy; and become faster.";
+ }
+
+ if(mode === "capital"){
+  text = "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG. PRACTICE MAKES YOU BETTER EVERY DAY.";
+ }
+
+ if(mode === "keyboard"){
+  text = "QWERTYUIOP ASDFGHJKL ZXCVBNM qwertyuiop asdfghjkl zxcvbnm ";
+ }
+
+ let result = text;
+
+ while(result.length < 500){
+  result += " "+text;
+ }
+
+ return result.trim();
+}
+
+
+function renderTarget(){
+
+ const typed = input.value;
+ let html = "";
+
+ for(let i=0;i<passage.length;i++){
+
+  let cls = "";
+
+  if(i < typed.length){
+   cls = typed[i] === passage[i] ? "correct" : "wrong";
+  }
+
+  if(i === typed.length){
+   cls += " current";
+  }
+
+  html += `<span class="${cls}">${escapeHTML(passage[i])}</span>`;
+ }
+
+ target.innerHTML = html;
+
+ const current = target.querySelector(".current");
+
+ if(current){
+  current.scrollIntoView({
+   block:"nearest",
+   inline:"nearest"
+  });
+ }
+}
+
+
+function escapeHTML(char){
+ return char.replace(/[&<>"']/g,c=>({
+ "&":"&amp;",
+ "<":"&lt;",
+ ">":"&gt;",
+ '"':"&quot;",
+ "'":"&#39;"
+ }[c]));
+}
+
+
+function calculate(){
+
+ const typed = input.value;
+ let correct = 0;
+ let errors = 0;
+
+ for(let i=0;i<typed.length;i++){
+  if(typed[i] === passage[i]) correct++;
+  else errors++;
+ }
+
+ const elapsed = started ?
+ Math.max((Date.now()-startTime)/60000,0.001) : 0;
+
+ const speed = elapsed ?
+ Math.round((correct/5)/elapsed) : 0;
+
+ const accuracy = typed.length ?
+ Math.round((correct/typed.length)*100) : 100;
+
+ wpmEl.textContent = speed;
+ accuracyEl.textContent = accuracy+"%";
+ mistakesEl.textContent = errors;
+
+}
+
+
+function startTimer(){
+
+ started = true;
+ startTime = Date.now();
+
+ timer = setInterval(()=>{
+
+  remaining--;
+
+  timeEl.textContent = remaining;
+
+  calculate();
+
+  if(remaining <= 0){
+   finishTest("Time is up! Your test is completed.");
+  }
+
+ },1000);
+
+}
+
+
+function finishTest(text){
+
+ finished = true;
+ clearInterval(timer);
+
+ input.disabled = true;
+
+ calculate();
+
+ message.textContent =
+ text+" Final WPM: "+wpmEl.textContent+
+ " | Accuracy: "+accuracyEl.textContent;
+
+}
+
+
+function resetTest(){
+
+ clearInterval(timer);
+
+ started = false;
+ finished = false;
+
+ remaining = Number(duration.value);
+
+ passage = generatePassage();
+
+ input.value = "";
+ input.disabled = false;
+
+ timeEl.textContent = remaining;
+ wpmEl.textContent = 0;
+ accuracyEl.textContent = "100%";
+ mistakesEl.textContent = 0;
+
+ message.textContent = "Click below and start typing!";
+
+ renderTarget();
+
+}
+
+
+input.addEventListener("input",()=>{
+
+ if(finished) return;
+
+ if(input.value.length > passage.length){
+  input.value = input.value.slice(0,passage.length);
+ }
+
+ if(!started && input.value.length > 0){
+  startTimer();
+  message.textContent = "Test started! Keep typing...";
+ }
+
+ renderTarget();
+ calculate();
+
+ if(input.value.length >= passage.length){
+  finishTest("Excellent! Passage completed.");
+ }
+
+});
+
+
+/* MODE SELECTION */
+
+document.querySelectorAll(".mode").forEach(button=>{
+
+ button.addEventListener("click",()=>{
+
+  document.querySelectorAll(".mode").forEach(b=>{
+   b.classList.remove("active");
+  });
+
+  button.classList.add("active");
+
+  mode = button.dataset.mode;
+
+  resetTest();
+
+ });
+
+});
+
+
+/* SETTINGS */
+
+difficulty.addEventListener("change",resetTest);
+duration.addEventListener("change",resetTest);
+
+document.getElementById("restart").addEventListener("click",resetTest);
+
+document.getElementById("next").addEventListener("click",()=>{
+ resetTest();
+ message.textContent = "New practice passage is ready!";
+});
+
+
+/* INITIALIZE */
+
+resetTest();
+
+</script>
+
 </body>
 </html>
