@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -130,6 +129,7 @@ select {
 .stat h2 {
     color: #38bdf8;
     font-size: 30px;
+    overflow-wrap: anywhere;
 }
 
 .stat p {
@@ -237,6 +237,25 @@ button:hover {
 
 #result button {
     margin-top: 15px;
+}
+
+/* NEW RESULT MARKS AND REMARKS */
+
+#finalMarks {
+    font-size: 32px;
+    font-weight: bold;
+    color: #38bdf8 !important;
+}
+
+#finalRemark {
+    font-size: 19px;
+    font-weight: bold;
+    color: #4ade80 !important;
+}
+
+#marksExplanation {
+    color: #94a3b8 !important;
+    font-size: 13px;
 }
 
 footer {
@@ -395,6 +414,28 @@ footer {
         <p>Mistakes</p>
     </div>
 
+    <!-- NEW STATISTICS -->
+
+    <div class="stat">
+        <h2 id="totalContent">0</h2>
+        <p>Total Characters</p>
+    </div>
+
+    <div class="stat">
+        <h2 id="totalTyped">0</h2>
+        <p>Typed Characters</p>
+    </div>
+
+    <div class="stat">
+        <h2 id="totalWords">0</h2>
+        <p>Words Displayed</p>
+    </div>
+
+    <div class="stat">
+        <h2 id="typedWords">0</h2>
+        <p>Words Typed</p>
+    </div>
+
 </div>
 
 <h3 class="section-title">Type the text below</h3>
@@ -416,12 +457,28 @@ footer {
 </div>
 
 <div id="result">
+
     <h2>🎉 Test Completed!</h2>
+
     <p id="finalWpm"></p>
     <p id="finalAccuracy"></p>
     <p id="finalMistakes"></p>
+
+    <!-- NEW FINAL REPORT -->
+
+    <p id="finalContent"></p>
+    <p id="finalTyped"></p>
+    <p id="finalWords"></p>
+    <p id="finalTypedWords"></p>
+
+    <p id="finalMarks"></p>
+    <p id="finalRemark"></p>
+    <p id="marksExplanation"></p>
+
     <p id="finalMode"></p>
+
     <button id="tryAgain">Try Again</button>
+
 </div>
 
 <footer>
@@ -517,6 +574,16 @@ let started = false;
 let finished = false;
 let testStartedAt = null;
 
+// COUNT WORDS
+
+function countWords(value) {
+    const trimmed = value.trim();
+
+    if (!trimmed) return 0;
+
+    return trimmed.split(/\s+/).length;
+}
+
 // GENERATE PRACTICE TEXT
 
 function generateText() {
@@ -524,6 +591,7 @@ function generateText() {
     const difficulty = document.getElementById("difficulty").value;
 
     if (mode === "words") {
+
         let count = difficulty === "easy" ? 15 :
                     difficulty === "medium" ? 25 : 40;
 
@@ -539,6 +607,7 @@ function generateText() {
     let base = data[mode][difficulty];
 
     if (["letters", "numbers", "symbols", "capital"].includes(mode)) {
+
         let result = "";
 
         while (result.length < 250) {
@@ -551,16 +620,37 @@ function generateText() {
     return base;
 }
 
+// UPDATE CONTENT COUNTS
+
+function updateContentStats() {
+
+    const typed = input.value;
+
+    document.getElementById("totalContent").textContent =
+        text.length;
+
+    document.getElementById("totalTyped").textContent =
+        typed.length;
+
+    document.getElementById("totalWords").textContent =
+        countWords(text);
+
+    document.getElementById("typedWords").textContent =
+        countWords(typed);
+}
+
 // DISPLAY TEXT
 
 function renderText() {
 
     const typed = input.value;
+
     display.innerHTML = "";
 
     [...text].forEach((char, index) => {
 
         const span = document.createElement("span");
+
         span.textContent = char;
 
         if (index < typed.length) {
@@ -572,13 +662,16 @@ function renderText() {
             }
 
         } else if (index === typed.length) {
+
             span.className = "current";
+
         }
 
         display.appendChild(span);
 
     });
 
+    updateContentStats();
 }
 
 // START TEST
@@ -588,16 +681,20 @@ function startTest() {
     if (started || finished) return;
 
     started = true;
+
     testStartedAt = Date.now();
 
     timerInterval = setInterval(() => {
 
         timeLeft = Math.max(
             0,
-            totalTime - Math.floor((Date.now() - testStartedAt) / 1000)
+            totalTime - Math.floor(
+                (Date.now() - testStartedAt) / 1000
+            )
         );
 
-        document.getElementById("timer").textContent = timeLeft;
+        document.getElementById("timer").textContent =
+            timeLeft;
 
         calculateStats();
 
@@ -628,9 +725,9 @@ function calculateStats() {
 
     }
 
-    let elapsed = (Date.now() - testStartedAt) / 1000;
-
-    if (!started) elapsed = 0;
+    let elapsed = started
+        ? (Date.now() - testStartedAt) / 1000
+        : 0;
 
     let minutes = Math.max(elapsed / 60, 1 / 60);
 
@@ -642,10 +739,59 @@ function calculateStats() {
         ? Math.round(correct / typed.length * 100)
         : 100;
 
-    document.getElementById("wpm").textContent = wpm;
-    document.getElementById("accuracy").textContent = accuracy + "%";
-    document.getElementById("mistakes").textContent = mistakes;
+    document.getElementById("wpm").textContent =
+        wpm;
 
+    document.getElementById("accuracy").textContent =
+        accuracy + "%";
+
+    document.getElementById("mistakes").textContent =
+        mistakes;
+
+    updateContentStats();
+
+}
+
+// CALCULATE MARKS
+
+function calculateMarks(wpm, accuracy) {
+
+    // Accuracy contributes 70 marks.
+    // Typing speed contributes 30 marks.
+    // 60 WPM or above receives full speed marks.
+
+    const accuracyMarks = accuracy * 0.70;
+
+    const speedMarks = Math.min(wpm / 60, 1) * 30;
+
+    const marks = Math.round(
+        accuracyMarks + speedMarks
+    );
+
+    return Math.min(100, marks);
+}
+
+// GENERATE REMARKS
+
+function getRemark(marks) {
+
+    if (marks >= 90) {
+        return "Excellent! Outstanding typing performance! 🏆";
+    }
+
+    if (marks >= 80) {
+        return "Very Good! You have excellent typing skills! 🌟";
+    }
+
+    if (marks >= 70) {
+        return "Good! Keep practicing to improve further! 👍";
+    }
+
+    if (marks >= 50) {
+        return "Average! More practice will improve your performance. ✍️";
+    }
+
+    return "Needs Improvement! Practice regularly and focus on accuracy. 💪";
 }
 
 // FINISH TEST
@@ -655,25 +801,70 @@ function endTest() {
     if (finished) return;
 
     finished = true;
+
     clearInterval(timerInterval);
 
     input.disabled = true;
 
     calculateStats();
 
+    const wpm = Number(
+        document.getElementById("wpm").textContent
+    );
+
+    const accuracy = Number(
+        document.getElementById("accuracy").textContent.replace("%", "")
+    );
+
+    const mistakes = Number(
+        document.getElementById("mistakes").textContent
+    );
+
+    const marks = calculateMarks(wpm, accuracy);
+
+    const remark = getRemark(marks);
+
+    // ORIGINAL RESULT
+
     document.getElementById("finalWpm").textContent =
-        "Typing Speed: " + document.getElementById("wpm").textContent + " WPM";
+        "Typing Speed: " + wpm + " WPM";
 
     document.getElementById("finalAccuracy").textContent =
-        "Accuracy: " + document.getElementById("accuracy").textContent;
+        "Accuracy: " + accuracy + "%";
 
     document.getElementById("finalMistakes").textContent =
-        "Mistakes: " + document.getElementById("mistakes").textContent;
+        "Mistakes: " + mistakes;
+
+    // NEW CONTENT REPORT
+
+    document.getElementById("finalContent").textContent =
+        "Total Characters Displayed: " + text.length;
+
+    document.getElementById("finalTyped").textContent =
+        "Total Characters Typed: " + input.value.length;
+
+    document.getElementById("finalWords").textContent =
+        "Total Words Displayed: " + countWords(text);
+
+    document.getElementById("finalTypedWords").textContent =
+        "Total Words Typed: " + countWords(input.value);
+
+    // NEW MARKS AND REMARKS
+
+    document.getElementById("finalMarks").textContent =
+        "Your Marks: " + marks + " / 100";
+
+    document.getElementById("finalRemark").textContent =
+        "Remark: " + remark;
+
+    document.getElementById("marksExplanation").textContent =
+        "Marks = 70% Accuracy + 30% Typing Speed";
 
     document.getElementById("finalMode").textContent =
         "Practice Mode: " + mode.toUpperCase();
 
-    document.getElementById("result").style.display = "block";
+    document.getElementById("result").style.display =
+        "block";
 
 }
 
@@ -683,7 +874,10 @@ function restartTest() {
 
     clearInterval(timerInterval);
 
-    totalTime = Number(document.getElementById("duration").value);
+    totalTime = Number(
+        document.getElementById("duration").value
+    );
+
     timeLeft = totalTime;
 
     started = false;
@@ -693,12 +887,18 @@ function restartTest() {
     input.value = "";
     input.disabled = false;
 
-    document.getElementById("timer").textContent = timeLeft;
+    document.getElementById("timer").textContent =
+        timeLeft;
+
     document.getElementById("wpm").textContent = 0;
-    document.getElementById("accuracy").textContent = "100%";
+
+    document.getElementById("accuracy").textContent =
+        "100%";
+
     document.getElementById("mistakes").textContent = 0;
 
-    document.getElementById("result").style.display = "none";
+    document.getElementById("result").style.display =
+        "none";
 
     text = generateText();
 
@@ -743,6 +943,7 @@ input.addEventListener("input", () => {
     }
 
     renderText();
+
     calculateStats();
 
     if (input.value.length === text.length) {
@@ -753,15 +954,30 @@ input.addEventListener("input", () => {
 
 // BUTTONS
 
-document.getElementById("restart").addEventListener("click", restartTest);
+document.getElementById("restart").addEventListener(
+    "click",
+    restartTest
+);
 
-document.getElementById("next").addEventListener("click", restartTest);
+document.getElementById("next").addEventListener(
+    "click",
+    restartTest
+);
 
-document.getElementById("tryAgain").addEventListener("click", restartTest);
+document.getElementById("tryAgain").addEventListener(
+    "click",
+    restartTest
+);
 
-document.getElementById("difficulty").addEventListener("change", restartTest);
+document.getElementById("difficulty").addEventListener(
+    "change",
+    restartTest
+);
 
-document.getElementById("duration").addEventListener("change", restartTest);
+document.getElementById("duration").addEventListener(
+    "change",
+    restartTest
+);
 
 // INITIALIZE
 
@@ -769,13 +985,15 @@ restartTest();
 
 </script>
 
-<!-- Floating Back Button -->
+<!-- FLOATING BACK BUTTON -->
+
 <button id="floatingBackBtn" type="button" aria-label="Go back">
-  &#8592;
+    &#8592;
 </button>
 
 <style>
-  #floatingBackBtn {
+
+#floatingBackBtn {
     position: fixed !important;
     bottom: 25px !important;
     left: 20px !important;
@@ -798,27 +1016,34 @@ restartTest();
 
     box-shadow: 0 3px 12px rgba(0,0,0,0.25);
     transition: background 0.2s ease;
-  }
+}
 
-  #floatingBackBtn:hover {
+#floatingBackBtn:hover {
     background: #444;
-  }
+}
+
 </style>
 
 <script>
+
 (function () {
-  const backBtn = document.getElementById("floatingBackBtn");
 
-  if (!backBtn) return;
+    const backBtn = document.getElementById("floatingBackBtn");
 
-  backBtn.addEventListener("click", function () {
-    if (window.history.length > 1) {
-      window.history.back();
-    } else {
-      window.location.href = "index.html";
-    }
-  });
+    if (!backBtn) return;
+
+    backBtn.addEventListener("click", function () {
+
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            window.location.href = "index.html";
+        }
+
+    });
+
 })();
+
 </script>
 
 </body>
