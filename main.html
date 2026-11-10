@@ -769,5 +769,57 @@ restartTest();
 
 </script>
 
+<!-- Floating Back Button -->
+<button id="floatingBackBtn" type="button" aria-label="Go back">
+  &#8592;
+</button>
+
+<style>
+  #floatingBackBtn {
+    position: fixed !important;
+    bottom: 25px !important;
+    left: 20px !important;
+    z-index: 999999 !important;
+
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+
+    background: #222;
+    color: #fff;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+    transition: background 0.2s ease;
+  }
+
+  #floatingBackBtn:hover {
+    background: #444;
+  }
+</style>
+
+<script>
+(function () {
+  const backBtn = document.getElementById("floatingBackBtn");
+
+  if (!backBtn) return;
+
+  backBtn.addEventListener("click", function () {
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      window.location.href = "index.html";
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
